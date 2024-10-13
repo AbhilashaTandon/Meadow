@@ -2,8 +2,6 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-#include "SimplexNoise.h"
-#include "SceneView.h"
 
 static const float tau = 6.283185307f;
 
@@ -37,10 +35,6 @@ public:
 
 	void MakeSurface(unsigned int num_tiles_width, unsigned int num_tiles_depth, float width, float depth);
 
-	void MakeRough(float freq, float amp, float lacu, float pers, unsigned int octaves, SceneView sv);
-
-	float GetNoise(unsigned int octaves, float x, float z);
-
 	void MakeCuboid(float height, float width, float depth);
 
 	Solid(Solid a, Solid b);
@@ -54,7 +48,5 @@ protected:
 
 	unsigned int num_vertices;
 	unsigned int num_triangles;
-
-	SimplexNoise sn;
 };
 

@@ -94,7 +94,6 @@ int main(void)
 		//x.MakeSphere(1., 40, 20);
 		surf.MakeSurface(512, 512, 100, 100);
 
-
 		std::vector<float> vertices_vec = surf.get_vertices(true);
 		std::vector<unsigned int> indices_vec = surf.get_indices();
 
@@ -140,15 +139,7 @@ int main(void)
 		while (!glfwWindowShouldClose(window))
 		{
 
-			surf.MakeRough(1., 100., 2., .5, 4, dynamic_view);
-
-			float camera_height = surf.GetNoise(4, dynamic_view.camera_pos.x, dynamic_view.camera_pos.z);
-
-			dynamic_view.camera_pos.y = -camera_height + 1.;
-
 			glm::mat4 terrain_transform = dynamic_view.get_transform();
-
-			
 
 			//coordinates of camera relative to terrain
 

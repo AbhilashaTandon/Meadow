@@ -12,7 +12,6 @@ Solid::Solid(glm::vec3 center)
 	num_vertices = 0;
 	num_triangles = 0;
 
-	sn = SimplexNoise();
 }
 
 std::vector<float> Solid::get_vertices(bool use_normals) {
@@ -251,32 +250,6 @@ void Solid::MakeSurface(unsigned int num_tiles_width, unsigned int num_tiles_dep
 	assert(points.size() == num_vertices);
 }
 
-void Solid::MakeRough(float freq, float amp, float lacu, float pers, unsigned int octaves, SceneView sv)
-{
-	//makes surface rough with simplex noise
-	//glm::vec4 SimplexNoise::noise_w_normal(size_t octaves, float x, float z)
-
-	sn = SimplexNoise(freq, amp, lacu, pers);
-
-	for (int i = 0; i < num_vertices; i++) {
-
-		glm::vec3 fixed_point = points[i]; //point in fixed space on surface
-
-		glm::vec3 terrain_point = sv.get_transform() * glm::vec4(fixed_point, 1.);
-
-		glm::vec4 noise_normal = sn.noise_w_normal(octaves, terrain_point.x, terrain_point.z);
-		glm::vec3 normal = glm::vec3(noise_normal.x, noise_normal.y, noise_normal.z);
-
-		float height = noise_normal.w;
-
-		points[i].y = height;
-		normals[i] = normal;
-	}
-}
-
-float Solid::GetNoise(unsigned int octaves, float x, float z) {
-	return sn.noise(octaves, x, z);
-}
 
 void Solid::MakeCuboid(float height, float width, float depth)
 {
@@ -343,7 +316,6 @@ void Solid::MakeCuboid(float height, float width, float depth)
 	 this->num_vertices = a.num_vertices + b.num_vertices;
 	 this->num_triangles = a.num_triangles + b.num_triangles;
 
-	 this->sn = a.sn;
 }
 
 
